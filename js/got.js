@@ -83,11 +83,16 @@ function deleteDeadCharacter(data){
 
 //characterek megjelenítése
 function generateGrid(data){
-    for(var i in data){
+    for(let i in data){
         var mapMainDiv = document.getElementById('map');  //beszúrási hely kiválasztása
         var newDiv = document.createElement('div'); //div létrehozás
-        var newPicDiv = document.createElement('div');
         var newP = document.createElement('p');
+
+        (function(){
+            newDiv.addEventListener('click', function(){
+                writeCharacterData(data, i);
+            });
+            })(data, i);
 
         newDiv.setAttribute('class', 'divCharacters');
         newP.setAttribute('class', 'newP');
@@ -96,43 +101,30 @@ function generateGrid(data){
         newP.innerHTML = `${data[i].name}`;
         
         mapMainDiv.appendChild(newDiv); //képet-nevet tartalmazó div hozzáadása a html-hez
-        newDiv.appendChild(newPicDiv);
         newDiv.appendChild(newP);
     }
-    document.querySelector('.divCharacters').addEventListener('mouseover', function() {
-        writeCharacterData(data);
-    });
 }
 
-function writeCharacterData(data){
-        var rightPic = document.createElement('div');
-        var rightName = document.createElement('p');
-        var rightBio = document.createElement('text');
-
-        for(var i in data){
+function writeCharacterData(data, i){
         rightPic.innerHTML = `<img src="${data[i].picture}" alt="${data[i].name}">`;
         rightName.innerHTML = `${data[i].name}`;
         rightBio.innerHTML = `${data[i].bio}`;
-        };
-        document.getElementById('targetCharacter').appendChild(rightPic);
-        document.getElementById('targetCharacter').appendChild(rightName);
-        document.getElementById('targetCharacter').appendChild(rightBio);
-
-}
+        }
 
 function searchByName(data){
-        var searchCharacter = document.getElementById('search').innerHTML;
-        var givenCharacter = searchCharacter.valueOf().toLowerCase();
+        var searchCharacter = document.getElementById('search');
+        var givenCharacter = searchCharacter.value.toLowerCase();
         
-        for(var i in data){
-        if(givenCharacter = (data[i].name).toLowerCase().indexOf(givenCharacter)){
+        for(var i = 0; i < data.length; i++){
+        if(givenCharacter && (data[i].name).toLowerCase().indexOf(givenCharacter) > -1){
             writeCharacterData(data, i);
             searchCharacter.value = data[i].name;
+            break;
         }
         else {
-            document.querySelector('.targetCharacter p:first-of-type').innerHTML = 'Character not found';
-            document.querySelector('.targetCharacter div:first-child').innerHTML = '';
-            document.querySelector('.targetCharacter text:first-of-type').innerHTML = '';
+            rightName.innerHTML = 'Character not found';
+            rightPic.innerHTML = '';
+            rightBio.innerHTML = '';
         }
     }
 }

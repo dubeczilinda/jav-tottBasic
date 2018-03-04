@@ -76,21 +76,22 @@ h1 {
     height: 200px;
 }
 
-#targetCharacter div:first-child{
+#rightPic {
     margin-top: 20px;
     height: 20%;
+    object-fit: cover;
 }
 
-#targetCharacter p:first-of-type{
+#rightName {
     font-family: "gameOfThrones";
     font-size: 20px;
-    margin-top: 140px;
+    margin-top: 160px;
 }
 
-#targetCharacter text:first-of-type{
+#rightBio {
     height: 20%;
     font-size: 16px;
-    margin-top: 150px;
+    margin-top: 170px;
 }
 
 .search {
